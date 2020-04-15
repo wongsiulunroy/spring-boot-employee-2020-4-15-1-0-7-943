@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.controller;
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +75,7 @@ public class EmployeeController {
 
     @PutMapping("/{employeeId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee updateNewEmployee(@PathVariable int employeeID, @RequestParam String employeeName, int age, String gender ) {
+    public Employee updateNewEmployee(@PathVariable int employeeID, @RequestParam String employeeName, int age, String gender) {
         Employee newEmployee = new Employee(employeeID, employeeName, age, gender);
         employees.add(newEmployee);
         return newEmployee;

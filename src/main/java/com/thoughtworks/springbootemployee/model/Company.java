@@ -9,7 +9,6 @@ public class Company {
     private String companyName;
     private int employeeNumber;
     private List<Employee> EmployeeList;
-;
 
     public Company(int companyID, String companyName, int employeeNumber, List<Employee> employeeList) {
         this.companyID = companyID;
@@ -44,7 +43,7 @@ public class Company {
 
     public List<Employee> getEmployeeList() {
         List<Employee> employees = new ArrayList<>();
-        for(int index = 0; index<EmployeeList.size(); index++) {
+        for (int index = 0; index < EmployeeList.size(); index++) {
             employees.add(this.EmployeeList.get(index));
         }
         return employees;
