@@ -66,10 +66,10 @@ public class EmployeeController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.OK)
-    public List<Employee> createNewEmployee(@RequestBody Employee employee) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public Employee createNewEmployee(@RequestBody Employee employee) {
         employees.add(employee);
-        return employees;
+        return employee;
     }
 
     @PutMapping("/{employeeId}")

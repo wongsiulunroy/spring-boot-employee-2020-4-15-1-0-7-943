@@ -12,7 +12,6 @@ import java.util.List;
 @RequestMapping("/companies")
 public class CompanyController {
     List<Company> companies = new ArrayList<>();
-    List<Employee> tempEmployeeList = new ArrayList<>();
 
     public CompanyController(List<Company> companies) {
         this.companies = companies;
@@ -21,16 +20,25 @@ public class CompanyController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Company> getAllCompanies() {
-        companies.add(new Company(1, "ABC", 100, tempEmployeeList));
-        companies.add(new Company(2, "DEF", 10, tempEmployeeList));
-        companies.add(new Company(3, "GH", 20, tempEmployeeList));
+        initCompanies();
         return companies;
+    }
+
+    private void initCompanies() {
+        List<Employee> ABCEmployeeList = new ArrayList<>();
+        List<Employee> DEFEmployeeList = new ArrayList<>();
+        companies.add(new Company(1, "ABC", 100, ABCEmployeeList));
+        companies.add(new Company(2, "DEF", 10, DEFEmployeeList));
+        ABCEmployeeList.add(new Employee(0, "Xiaoming", 20, "Male"));
+        ABCEmployeeList.add(new Employee(1, "Xiaohong", 19, "Female"));
+        ABCEmployeeList.add(new Employee(2, "Xiaozhi", 15, "Male"));
+        DEFEmployeeList.add(new Employee(3, "Xiaogang", 16, "Male"));
+        DEFEmployeeList.add(new Employee(4, "Xiaoxia", 16, "Female"));
     }
 
     @GetMapping("/{companyID}")
     public Company getCompany(@PathVariable int companyID) {
-        companies.add(new Company(1, "ABC", 100, tempEmployeeList));
-        companies.add(new Company(2, "DEF", 10, tempEmployeeList));
+        initCompanies();
         for (Company company : companies) {
             if (company.getCompanyID() == companyID) {
                 return company;
@@ -41,21 +49,37 @@ public class CompanyController {
 
     @GetMapping("/{companyID}/employees")
     public List<Employee> getEmployeeOfCompany(@PathVariable int companyID) {
-        List<Employee> ABCEmployeeList = new ArrayList<>();
-        List<Employee> DEFEmployeeList = new ArrayList<>();
-        companies.add(new Company(1, "ABC", 100, ABCEmployeeList));
-        companies.add(new Company(2, "DEF", 10, DEFEmployeeList));
-        ABCEmployeeList.add(new Employee(0, "Xiaoming", 20, "Male"));
-        ABCEmployeeList.add(new Employee(1, "Xiaohong", 19, "Female"));
-        ABCEmployeeList.add(new Employee(2, "Xiaozhi", 15, "Male"));
-        DEFEmployeeList.add(new Employee(3, "Xiaogang", 16, "Male"));
-        DEFEmployeeList.add(new Employee(4, "Xiaoxia", 16, "Female"));
+        initCompanies();
         for (Company company : companies) {
             if (company.getCompanyID() == companyID) {
                 return company.getEmployeeList();
             }
         }
         return null;
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Company createNewCompany(@RequestBody Company company) {
+        companies.add(company);
+        return company;
+    }
+    
+    @PutMapping("/{companyID}")
+    public Company updateNewCompany(@PathVariable int companyID, @RequestParam String companyName, int employeeNumber, List<Employee> employees) {
+        Company newCompany = new Company(companyID, companyName, employeeNumber, employees);
+        companies.add(newCompany);
+        return newCompany;
+    }
+
+    @DeleteMapping("/{companyID}")
+    public void deleteAllEmployeeFromCompany(@PathVariable int companyID) {
+        for (Company company : companies) {
+            if (company.getCompanyID() == companyID) {
+                company.getEmployeeList().remove(company);
+            }
+        }
+        //return employee;
     }
 
 
