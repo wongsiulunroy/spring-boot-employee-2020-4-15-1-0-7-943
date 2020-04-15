@@ -3,7 +3,6 @@ package com.thoughtworks.springbootemployee.controller;
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,18 +49,17 @@ public class EmployeeController {
         return employees;
     }*/
 
-    @GetMapping("/employees")
+    @GetMapping(params = "gender")
     @ResponseStatus(HttpStatus.OK)
-    public List<Employee> getMaleEmployee(@RequestParam(defaultValue = "employees") String gender){
+    public List<Employee> getMaleEmployee(@RequestParam String gender) {
         List<Employee> MaleEmployee = new ArrayList<>();
         employees.add(new Employee(1, "Xiaohong", 19, "Female"));
         employees.add(new Employee(2, "Xiaozhi", 15, "Male"));
         employees.add(new Employee(3, "Xiaogang", 16, "Male"));
         employees.add(new Employee(4, "Xiaoxia", 16, "Female"));
         for (Employee employee : employees) {
-            if (employee.getGender() == gender) {
+            if (employee.getGender() == "Male") {
                 MaleEmployee.add(employee);
-                return MaleEmployee;
             }
         }
         return MaleEmployee;
