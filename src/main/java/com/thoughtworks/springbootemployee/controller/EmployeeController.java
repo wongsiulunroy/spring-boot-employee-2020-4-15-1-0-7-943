@@ -51,14 +51,14 @@ public class EmployeeController {
 
     @GetMapping(params = "gender")
     @ResponseStatus(HttpStatus.OK)
-    public List<Employee> getMaleEmployee(@RequestParam String gender) {
+    public List<Employee> getMaleEmployee(@RequestParam(required = false) String gender) {
         List<Employee> MaleEmployee = new ArrayList<>();
         employees.add(new Employee(1, "Xiaohong", 19, "Female"));
         employees.add(new Employee(2, "Xiaozhi", 15, "Male"));
         employees.add(new Employee(3, "Xiaogang", 16, "Male"));
         employees.add(new Employee(4, "Xiaoxia", 16, "Female"));
         for (Employee employee : employees) {
-            if (employee.getGender() == "Male") {
+            if (employee.getGender().equals(gender)) {
                 MaleEmployee.add(employee);
             }
         }
