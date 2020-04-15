@@ -82,7 +82,6 @@ public class EmployeeController {
     @DeleteMapping("/{employeeId}")
     public void deleteNewEmployee(@PathVariable int employeeID) {
         employees.remove(employeeID);
-        //return employee;
     }
 
 

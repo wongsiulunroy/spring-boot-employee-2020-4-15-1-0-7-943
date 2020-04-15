@@ -64,7 +64,7 @@ public class CompanyController {
         companies.add(company);
         return company;
     }
-    
+
     @PutMapping("/{companyID}")
     public Company updateNewCompany(@PathVariable int companyID, @RequestParam String companyName, int employeeNumber, List<Employee> employees) {
         Company newCompany = new Company(companyID, companyName, employeeNumber, employees);
@@ -76,10 +76,9 @@ public class CompanyController {
     public void deleteAllEmployeeFromCompany(@PathVariable int companyID) {
         for (Company company : companies) {
             if (company.getCompanyID() == companyID) {
-                company.getEmployeeList().remove(company);
+                company.getEmployeeList().clear();
             }
         }
-        //return employee;
     }
 
 
