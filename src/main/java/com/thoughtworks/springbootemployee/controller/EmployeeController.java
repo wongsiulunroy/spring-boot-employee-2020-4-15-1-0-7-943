@@ -38,7 +38,7 @@ public class EmployeeController {
         }
         return null;
     }
-
+/*
     @GetMapping("/employees")
     @ResponseStatus(HttpStatus.OK)
     public List<Employee> getEmployeeWithPageQuery(@RequestParam(defaultValue = "employees") int page, int pageSize) {
@@ -48,6 +48,23 @@ public class EmployeeController {
         employees.add(new Employee(3, "Xiaogang", 16, "Male"));
         employees.add(new Employee(4, "Xiaoxia", 16, "Female"));
         return employees;
+    }*/
+
+    @GetMapping("/employees")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Employee> getMaleEmployee(@RequestParam(defaultValue = "employees") String gender){
+        List<Employee> MaleEmployee = new ArrayList<>();
+        employees.add(new Employee(1, "Xiaohong", 19, "Female"));
+        employees.add(new Employee(2, "Xiaozhi", 15, "Male"));
+        employees.add(new Employee(3, "Xiaogang", 16, "Male"));
+        employees.add(new Employee(4, "Xiaoxia", 16, "Female"));
+        for (Employee employee : employees) {
+            if (employee.getGender() == gender) {
+                MaleEmployee.add(employee);
+                return MaleEmployee;
+            }
+        }
+        return MaleEmployee;
     }
 
     @PostMapping
