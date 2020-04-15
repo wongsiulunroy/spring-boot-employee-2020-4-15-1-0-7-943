@@ -38,34 +38,34 @@ public class EmployeeController {
         }
         return null;
     }
-    /*
-    @GetMapping
+
+    @GetMapping("/employees")
     @ResponseStatus(HttpStatus.OK)
-    public List<Employee> getEmployeeWithPageQuery(@RequestParam int page, int pageSize) {
+    public List<Employee> getEmployeeWithPageQuery(@RequestParam(defaultValue = "employees") int page, int pageSize) {
         employees.add(new Employee(0, "Xiaoming", 20, "Male"));
         employees.add(new Employee(1, "Xiaohong", 19, "Female"));
         employees.add(new Employee(2, "Xiaozhi", 15, "Male"));
         employees.add(new Employee(3, "Xiaogang", 16, "Male"));
         employees.add(new Employee(4, "Xiaoxia", 16, "Female"));
         return employees;
-    }*/
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public Employee createNewEmployee(@RequestBody Employee employee) {
+    public List<Employee> createNewEmployee(@RequestBody Employee employee) {
         employees.add(employee);
-        return employee;
+        return employees;
     }
 
     @PutMapping("/{employeeId}")
-    public Employee updateNewEmployee(int employeeID, Employee newEmployee) {
-        employees.remove(employeeID); //replace old employee
+    public Employee updateNewEmployee(@PathVariable int employeeID, @RequestParam String employeeName, int age, String gender ) {
+        Employee newEmployee = new Employee(employeeID, employeeName, age, gender);
         employees.add(newEmployee);
         return newEmployee;
     }
 
     @DeleteMapping("/{employeeId}")
-    public void deleteNewEmployee(int employeeID) {
+    public void deleteNewEmployee(@PathVariable int employeeID) {
         employees.remove(employeeID);
         //return employee;
     }
