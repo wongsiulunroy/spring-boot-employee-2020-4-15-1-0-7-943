@@ -43,13 +43,13 @@ public class EmployeeController {
         return service.createNewEmployee(employee);
     }
 
-    @PutMapping("/{employeeId}")
+    @PutMapping("/{employeeID}")
     @ResponseStatus(HttpStatus.CREATED)
     public Employee updateNewEmployee(@PathVariable int employeeID, @RequestBody Employee newEmployee) {
         return service.updateNewEmployee(employeeID, newEmployee);
     }
 
-    @DeleteMapping("/{employeeId}")
+    @DeleteMapping("/{employeeID}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteEmployee(@PathVariable int employeeID) {
         service.deleteEmployee(employeeID);

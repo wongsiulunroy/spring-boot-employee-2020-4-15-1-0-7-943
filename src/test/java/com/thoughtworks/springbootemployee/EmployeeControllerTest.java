@@ -76,14 +76,15 @@ public class EmployeeControllerTest {
     public void shouldUpdateEmployee() {
         Employee employee = new Employee();
         employee.setEmployeeName("Tom");
+        employee.setEmployeeID(1);
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .body(employee)
                 .when()
                 .put("/employees/1");
 
-        Assert.assertEquals(405, response.getStatusCode());
+        Assert.assertEquals(201, response.getStatusCode());
         Assert.assertEquals("Tom", response.jsonPath().get("employeeName"));
-        Assert.assertEquals("1", response.jsonPath().get("employeeID"));
+        Assert.assertEquals(1, response.jsonPath().getInt("employeeID"));
     }
 
     @Test

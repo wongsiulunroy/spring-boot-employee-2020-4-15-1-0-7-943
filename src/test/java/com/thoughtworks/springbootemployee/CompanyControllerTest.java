@@ -90,7 +90,7 @@ public class CompanyControllerTest {
     public void shouldDeleteCompany(){
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .when()
-                .delete("/employee/1");
+                .delete("/companies/1");
 
         Assert.assertEquals(200, response.getStatusCode());
     }
