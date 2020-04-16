@@ -77,6 +77,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{employeeId}")
+    @ResponseStatus(HttpStatus.OK)
     public void deleteNewEmployee(@PathVariable int employeeID) {
         employees.remove(employeeID);
     }

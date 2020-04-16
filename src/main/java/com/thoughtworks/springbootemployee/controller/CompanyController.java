@@ -66,9 +66,15 @@ public class CompanyController {
     }
 
     @PutMapping("/{companyID}")
-    public Company updateNewCompany(@PathVariable int companyID, @RequestParam String companyName, int employeeNumber, List<Employee> employees) {
-        Company newCompany = new Company(companyID, companyName, employeeNumber, employees);
-        companies.add(newCompany);
+    public Company updateNewCompany(@PathVariable int companyID, @RequestBody Company newCompany) {
+        for (Company company : companies) {
+            if (company.getCompanyID() == companyID) {
+                company.setCompanyID(newCompany.getCompanyID());
+                company.setCompanyName(newCompany.getCompanyName());
+                company.setEmployeeNumber(newCompany.getEmployeeNumber());
+                company.setEmployeeList(newCompany.getEmployeeList());
+            }
+        }
         return newCompany;
     }
 
