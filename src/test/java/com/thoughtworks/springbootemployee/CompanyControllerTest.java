@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee;
 import com.thoughtworks.springbootemployee.controller.CompanyController;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.TypeRef;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -55,17 +56,46 @@ public class CompanyControllerTest {
         });
         Assert.assertEquals("Xiaoming", employees.get(0).getEmployeeName());
     }
+
     @Test
     public void shouldAddCompany() {
-        Company company = new Company();
+        CompanyRepository companyRepository = new CompanyRepository();
+        Company company = new Company(23, "XYZ", 500, companyRepository.getEmployeeByCompanyId(1));
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .body(company)
                 .when()
-                .post("/employees");
+                .post("/companies");
 
         Assert.assertEquals(201, response.getStatusCode());
-        Assert.assertEquals("Tom", response.jsonPath().get("employeeName"));
+        Assert.assertEquals("XYZ", response.jsonPath().get("companyName"));
+        Assert.assertEquals(23, response.jsonPath().getInt("companyID"));
     }
+    @Test
+    public void shouldUpdateCompany() {
+        CompanyRepository companyRepository = new CompanyRepository();
+        Company company = new Company(1, "XYZ", 500, companyRepository.getEmployeeByCompanyId(1));
+        //Company company = new Company();
+        //company.setCompanyName("XYZ");
+        MockMvcResponse response = given().contentType(ContentType.JSON)
+                .body(company)
+                .when()
+                .put("/companies/1");
+
+        Assert.assertEquals(200, response.getStatusCode());
+        Assert.assertEquals("XYZ", response.jsonPath().get("companyName"));
+        Assert.assertEquals(1, response.jsonPath().getInt("companyID"));
+    }
+
+    @Test
+    public void shouldDeleteCompany(){
+        MockMvcResponse response = given().contentType(ContentType.JSON)
+                .when()
+                .delete("/employee/1");
+
+        Assert.assertEquals(200, response.getStatusCode());
+    }
+
+
 
 
 
