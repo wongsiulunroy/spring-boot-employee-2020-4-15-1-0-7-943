@@ -2,6 +2,9 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.service.CompanyService;
+import com.thoughtworks.springbootemployee.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +15,8 @@ import java.util.List;
 @RequestMapping("/companies")
 public class CompanyController {
     List<Company> companies = new ArrayList<>();
+    @Autowired
+    private CompanyService service;
 
     public CompanyController(List<Company> companies) {
         this.companies = companies;
@@ -20,8 +25,7 @@ public class CompanyController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Company> getAllCompanies() {
-        initCompanies();
-        return companies;
+        return service.getAllCompanies();
     }
 
     private void initCompanies() {
@@ -37,25 +41,13 @@ public class CompanyController {
     }
 
     @GetMapping("/{companyID}")
-    public Company getCompany(@PathVariable int companyID) {
-        initCompanies();
-        for (Company company : companies) {
-            if (company.getCompanyID() == companyID) {
-                return company;
-            }
-        }
-        return null;
+    public Company getCompanyById(@PathVariable int companyID) {
+        return service.getCompanyById(companyID);
     }
 
     @GetMapping("/{companyID}/employees")
-    public List<Employee> getEmployeeOfCompany(@PathVariable int companyID) {
-        initCompanies();
-        for (Company company : companies) {
-            if (company.getCompanyID() == companyID) {
-                return company.getEmployeeList();
-            }
-        }
-        return null;
+    public List<Employee> getEmployeeByCompanyId(@PathVariable int companyID) {
+        return service.getEmployeeByCompanyId(companyID);
     }
 
     @PostMapping
