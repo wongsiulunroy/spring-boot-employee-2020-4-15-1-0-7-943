@@ -76,7 +76,7 @@ public class CompanyController {
     public void deleteAllEmployeeFromCompany(@PathVariable int companyID) {
         for (Company company : companies) {
             if (company.getCompanyID() == companyID) {
-                company.getEmployeeList().clear();
+                companies.remove(company);
             }
         }
     }
