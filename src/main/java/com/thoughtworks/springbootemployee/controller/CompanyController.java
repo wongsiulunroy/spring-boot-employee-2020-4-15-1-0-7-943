@@ -61,7 +61,7 @@ public class CompanyController {
         return service.updateNewCompany(companyID, newCompany);
     }
 
-    @DeleteMapping("/{companyID}")
+    @DeleteMapping("/{companyId}")
     public void deleteAllEmployeeFromCompany(@PathVariable int companyID) {
         service.deleteAllEmployeeFromCompany(companyID);
     }

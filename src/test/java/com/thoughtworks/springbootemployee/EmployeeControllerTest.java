@@ -91,7 +91,7 @@ public class EmployeeControllerTest {
     public void shouldDeleteEmployee(){
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .when()
-                .delete("/employee/1");
+                .delete("/employees/1");
 
         Assert.assertEquals(200, response.getStatusCode());
     }
