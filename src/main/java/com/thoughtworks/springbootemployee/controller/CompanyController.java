@@ -53,30 +53,17 @@ public class CompanyController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Company createNewCompany(@RequestBody Company company) {
-        companies.add(company);
-        return company;
+        return service.createNewCompany(company);
     }
 
     @PutMapping("/{companyID}")
     public Company updateNewCompany(@PathVariable int companyID, @RequestBody Company newCompany) {
-        for (Company company : companies) {
-            if (company.getCompanyID() == companyID) {
-                company.setCompanyID(newCompany.getCompanyID());
-                company.setCompanyName(newCompany.getCompanyName());
-                company.setEmployeeNumber(newCompany.getEmployeeNumber());
-                company.setEmployeeList(newCompany.getEmployeeList());
-            }
-        }
-        return newCompany;
+        return service.updateNewCompany(companyID, newCompany);
     }
 
     @DeleteMapping("/{companyID}")
     public void deleteAllEmployeeFromCompany(@PathVariable int companyID) {
-        for (Company company : companies) {
-            if (company.getCompanyID() == companyID) {
-                companies.remove(company);
-            }
-        }
+        service.deleteAllEmployeeFromCompany(companyID);
     }
 
 

@@ -44,5 +44,21 @@ public class CompanyRepository {
         }
         return null;
     }
-    
+
+    public Company createNewCompany(Company company) {
+        companies.add(company);
+        return company;
+    }
+
+    public Company updateNewCompany(int companyID, Company newCompany) {
+        return newCompany;
+    }
+
+    public void deleteAllEmployeeFromCompany(int companyID) {
+        for (Company company : companies) {
+            if (company.getCompanyID() == companyID) {
+                companies.remove(company);
+            }
+        }
+    }
 }

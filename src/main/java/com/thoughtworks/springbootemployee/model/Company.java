@@ -10,12 +10,16 @@ public class Company {
     private int employeeNumber;
     private List<Employee> EmployeeList;
 
+    public Company() {
+    }
+
     public Company(int companyID, String companyName, int employeeNumber, List<Employee> employeeList) {
         this.companyID = companyID;
         this.companyName = companyName;
         this.employeeNumber = employeeNumber;
         EmployeeList = employeeList;
     }
+
 
     public int getCompanyID() {
         return companyID;

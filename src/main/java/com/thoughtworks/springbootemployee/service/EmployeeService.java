@@ -27,6 +27,9 @@ public class EmployeeService {
     }
 
     public Employee updateNewEmployee(int employeeID, Employee newEmployee) {
+        if (newEmployee == null){
+            return null;
+        }
         List<Employee> employees = getAllEmployees();
         for (Employee employee : employees) {
             if (employee.getEmployeeID() == employeeID) {

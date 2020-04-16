@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee;
 
-import com.thoughtworks.springbootemployee.controller.EmployeeController;
+import com.thoughtworks.springbootemployee.controller.CompanyController;
+import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.TypeRef;
@@ -21,33 +22,29 @@ import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class EmployeeControllerTest {
+public class CompanyControllerTest {
     @Autowired
-    private EmployeeController employeeController;
+    private CompanyController companyController;
 
     @Before
     public void setUp() throws Exception {
-        RestAssuredMockMvc.standaloneSetup(employeeController);
+        RestAssuredMockMvc.standaloneSetup(companyController);
     }
-
     @Test
-    public void shouldFindEmployeeById() {
+    public void shouldFindCompanyById() {
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .when()
-                .get("/employees/1");
+                .get("/companies/1");
 
         Assert.assertEquals(200, response.getStatusCode());
-        Employee employee = response.getBody().as(Employee.class);
-        Assert.assertEquals(1, employee.getEmployeeID());
-        Assert.assertEquals("Xiaohong", employee.getEmployeeName());
+        Company company = response.getBody().as(Company.class);
+        Assert.assertEquals(1, company.getCompanyID());
     }
-
     @Test
-    public void shouldFindEmployeeByGender() {
+    public void shouldFindEmployeeByCompanyId() {
         MockMvcResponse response = given().contentType(ContentType.JSON)
-                .params("gender","Male")
                 .when()
-                .get("/employees");
+                .get("/companies/1/employees");
 
         Assert.assertEquals(200, response.getStatusCode());
         List<Employee> employees = response.getBody().as(new TypeRef<List<Employee>>() {
@@ -56,15 +53,13 @@ public class EmployeeControllerTest {
                 return super.getType();
             }
         });
-        Assert.assertEquals(3, employees.size());
         Assert.assertEquals("Xiaoming", employees.get(0).getEmployeeName());
     }
-
     @Test
-    public void shouldAddEmployee() {
-        Employee employee = new Employee(100,"Tom", 10, "Male");
+    public void shouldAddCompany() {
+        Company company = new Company();
         MockMvcResponse response = given().contentType(ContentType.JSON)
-                .body(employee)
+                .body(company)
                 .when()
                 .post("/employees");
 
@@ -72,28 +67,12 @@ public class EmployeeControllerTest {
         Assert.assertEquals("Tom", response.jsonPath().get("employeeName"));
     }
 
-    @Test
-    public void shouldUpdateEmployee() {
-        Employee employee = new Employee();
-        employee.setEmployeeName("Tom");
-        MockMvcResponse response = given().contentType(ContentType.JSON)
-                .body(employee)
-                .when()
-                .put("/employees/1");
 
-        Assert.assertEquals(405, response.getStatusCode());
-        Assert.assertEquals("Tom", response.jsonPath().get("employeeName"));
-        Assert.assertEquals("1", response.jsonPath().get("employeeID"));
-    }
 
-    @Test
-    public void shouldDeleteEmployee(){
-        MockMvcResponse response = given().contentType(ContentType.JSON)
-                .when()
-                .delete("/employee/1");
 
-        Assert.assertEquals(200, response.getStatusCode());
-    }
+
+
+
 
 
 }
