@@ -6,24 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class EmployeeService {
     @Autowired
     private EmployeeRepository repository;
     public List<Employee> getAllEmployees() {
-        return repository.getAllEmployees();
+        return repository.findAll();
     }
 
-    public Employee getEmployeeById(int employeeID) {
-        return repository.getEmployeeById(employeeID);
+    public Optional<Employee> getEmployeeById(int employeeID) {
+        return repository.findById(employeeID);
     }
 
     public List<Employee> getEmployeeByGender(String gender) {
-        return repository.getEmployeeByGender(gender);
+        return repository.findAllEmployeeByGender(gender);
     }
 
     public Employee createNewEmployee(Employee employee) {
-        return repository.createNewEmployee(employee);
+        return repository.save(employee);
     }
 
     public Employee updateNewEmployee(int employeeID, Employee newEmployee) {
@@ -39,10 +41,11 @@ public class EmployeeService {
                 employee.setAge(newEmployee.getAge());
             }
         }
-        return repository.updateNewEmployee(employeeID, newEmployee);
+        repository.save(newEmployee);
+        return newEmployee;
     }
 
     public void deleteEmployee(int employeeID) {
-        repository.deleteEmployee(employeeID);
+        repository.deleteById(employeeID);
     }
 }

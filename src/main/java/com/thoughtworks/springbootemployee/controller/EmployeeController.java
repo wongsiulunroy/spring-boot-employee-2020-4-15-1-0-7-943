@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -27,7 +28,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeID}")
-    public Employee getEmployeeById(@PathVariable int employeeID) {
+    public Optional<Employee> getEmployeeById(@PathVariable int employeeID) {
         return service.getEmployeeById(employeeID);
     }
 

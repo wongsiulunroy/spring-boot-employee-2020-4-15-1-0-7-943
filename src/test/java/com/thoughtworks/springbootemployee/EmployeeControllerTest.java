@@ -9,6 +9,7 @@ import io.restassured.module.mockmvc.response.MockMvcResponse;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,7 +39,7 @@ public class EmployeeControllerTest {
 
         Assert.assertEquals(200, response.getStatusCode());
         Employee employee = response.getBody().as(Employee.class);
-        Assert.assertEquals(1, employee.getEmployeeID());
+        Assert.assertEquals(java.util.Optional.of(1), employee.getEmployeeID());
         Assert.assertEquals("Xiaohong", employee.getEmployeeName());
     }
 
@@ -62,7 +63,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void shouldAddEmployee() {
-        Employee employee = new Employee(100,"Tom", 10, "Male");
+        Employee employee = new Employee(100,"Tom", 10, "Male", 1);
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .body(employee)
                 .when()

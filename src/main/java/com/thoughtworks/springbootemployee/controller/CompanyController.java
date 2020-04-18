@@ -3,13 +3,13 @@ package com.thoughtworks.springbootemployee.controller;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
-import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/companies")
@@ -28,25 +28,14 @@ public class CompanyController {
         return service.getAllCompanies();
     }
 
-    private void initCompanies() {
-        List<Employee> ABCEmployeeList = new ArrayList<>();
-        List<Employee> DEFEmployeeList = new ArrayList<>();
-        companies.add(new Company(1, "ABC", 100, ABCEmployeeList));
-        companies.add(new Company(2, "DEF", 10, DEFEmployeeList));
-        ABCEmployeeList.add(new Employee(0, "Xiaoming", 20, "Male"));
-        ABCEmployeeList.add(new Employee(1, "Xiaohong", 19, "Female"));
-        ABCEmployeeList.add(new Employee(2, "Xiaozhi", 15, "Male"));
-        DEFEmployeeList.add(new Employee(3, "Xiaogang", 16, "Male"));
-        DEFEmployeeList.add(new Employee(4, "Xiaoxia", 16, "Female"));
-    }
 
     @GetMapping("/{companyID}")
-    public Company getCompanyById(@PathVariable int companyID) {
+    public Company getCompanyById(@PathVariable Integer companyID) {
         return service.getCompanyById(companyID);
     }
 
     @GetMapping("/{companyID}/employees")
-    public List<Employee> getEmployeeByCompanyId(@PathVariable int companyID) {
+    public List<Employee> getEmployeeByCompanyId(@PathVariable Integer companyID) {
         return service.getEmployeeByCompanyId(companyID);
     }
 
@@ -57,12 +46,12 @@ public class CompanyController {
     }
 
     @PutMapping("/{companyID}")
-    public Company updateNewCompany(@PathVariable int companyID, @RequestBody Company newCompany) {
+    public Company updateNewCompany(@PathVariable Integer companyID, @RequestBody Company newCompany) {
         return service.updateNewCompany(companyID, newCompany);
     }
 
     @DeleteMapping("/{companyId}")
-    public void deleteAllEmployeeFromCompany(@PathVariable int companyID) {
+    public void deleteAllEmployeeFromCompany(@PathVariable Integer companyID) {
         service.deleteAllEmployeeFromCompany(companyID);
     }
 
